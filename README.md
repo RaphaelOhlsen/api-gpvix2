@@ -171,7 +171,7 @@ No banco de dados temos 3 tabelas. São elas:
 Swagger é uma estrutura de código aberto que permite criar, documentar e testar APIs de forma fácil e eficiente. É amplamente utilizado para descrever e documentar APIs RESTful, fornecendo uma representação visual interativa da API.
 A principal finalidade do Swagger é melhorar a comunicação entre os desenvolvedores da API e os consumidores da API (como desenvolvedores de aplicativos ou clientes). Com o Swagger, é possível descrever detalhadamente os endpoints da API, os parâmetros necessários, os tipos de dados esperados, as respostas possíveis e até mesmo fornecer exemplos de uso.
 
-## Iniciando a API
+### Iniciando a API
 
 ```bash
 # Inciando a aplicação
