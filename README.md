@@ -5,6 +5,7 @@
  <a href="#-sobre-o-projeto">Sobre</a> •
  <a href="#-gpvix">API GPVIX</a> •
  <a href="#-tecnologias">Tecnologias</a> •
+ <a href="#-online">Projeto Online</a> •
  <a href="#-install">Instalações</a> •
  <a href="#-env">Arquivo .env</a> •
  <a href="#-database">Banco de Dados</a> •
@@ -72,13 +73,22 @@ As seguintes ferramentas foram usadas na construção do projeto
 
 ---
 
+<a id="-online"></a>
+
+## 🌐 Projeto Online
+
+A aplicação se encontra em produção e está hospedada na Digital Ocean através deste [link](https://oyster-app-sjykt.ondigitalocean.app/api-docs/). A área de documentação é aberta mas a maioria das rota requer autorização. Caso queira acesso temporário a aplicação entre em [contato](https://mocad.dev/#contato).
+
+
+---
+
 <a id="-install"></a>
 
-## ⚙️ Instalações
+### ⚙️ Instalações
 
 &nbsp;
 
-### Instalando o projeto
+## Instalando o projeto
 
 ```bash
 # Clone este repositório
