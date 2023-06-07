@@ -1,0 +1,1523 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Documentação da API GPVIX",
+    "description": "Esta API é parte do projeto GPVIX, que tem como objetivo a criação de um sistema de gerenciamento de clientes.",
+    "contact": {
+      "name": "Raphael Bernardo Ohlsen",
+      "email": "raphael@mocad.dev"
+    },
+    "version": "1.0.0"
+  }, 
+  "paths": {
+    "/signup": {
+      "post": {
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário que por padrão sempre terá definido a role(papel) de 'user'. Sempre realizado na hora do cadastro.",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Signup"
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "john@teste.com",
+                "password": "1234567890"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso, retorna o ID do usuário criado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "example": 51
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "body": {
+                      "name": "Deve ter pelo menos 3 caracteres",
+                      "email": "Deve ter pelo menos 5 caracteres",
+                      "password": "Deve ter pelo menos 6 caracteres"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre se o email já estiver cadastrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Erro ao cadastrar o registro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signin": {
+      "post": {
+        "summary": "Login de usuário",
+        "description": "Efetua o login do usuário, retornando um token de autenticação que deve ser utilizado nas requisições que necessitam de autenticação.",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Signin"
+              },
+              "example": {
+                "email": "john@teste.com",
+                "password": "1234567890"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login efetuado com sucesso, retorna o token de autenticação e role do usuário.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "accessToken": "eyBhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQ3LCJ1cm9sZSI6ImFkbWlrIiwiaWF0IjoxNjg1MDQ2MjcwLCJleHAiOjE2ODUxMzI2NzB9.ZUeCZbJEbdXAi1oUpeHLmKQrMWB8XJvSnxobksMrRFw",
+                  "role": "user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "body": {
+                      "email": "Deve ter pelo menos 5 caracteres",
+                      "password": "Deve ter pelo menos 6 caracteres"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o email ou senha estão incorretos.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Email ou senha incorretos"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre ao gerar o access token.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Erro ao gerar access token"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Lista todos os usuários",
+        "description": "Lista todos os usuários cadastrados no sistema. Realizado somente por usuários com a role(papel) de 'sadmin'.",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limite de usuários por pagina. Numero maior que 0",
+            "default": 7,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "pagina atual. Numero maior que 0",
+            "default": 1,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "filtro de busca",
+            "default": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de usuários",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "John Doe",
+                    "email": "john@teste.com",
+                    "role": "user"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Jane Doe",
+                    "email": "jane@teste.com",
+                    "role": "user"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "query": {
+                      "page": "Deve ser maior que 0",
+                      "limit": "Deve ser maior que 0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário. Realizado somente por usuários com a role(papel) de 'sadmin'.",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostUser"
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "john@teste.com",
+                "password": "1234567890",
+                "role": "user"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso, retorna o ID do usuário criado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "example": 51
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "body": {
+                      "name": "Deve ter pelo menos 3 caracteres",
+                      "email": "Deve ter pelo menos 5 caracteres",
+                      "password": "Deve ter pelo menos 6 caracteres",
+                      "role": "Deve ser um dos seguintes valores: user, admin, sadmin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre se o email já estiver cadastrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Erro ao cadastrar o registro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Busca um usuário pelo ID informado",
+        "description": "Busca um usuário pelo ID informado. Realizado somente por usuários com a role(papel) de 'sadmin'.",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "John Doe",
+                  "email": "john@teste.com",
+                  "role": "user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender ao seguinte requisito de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "params": {
+                      "id": "Deve ser maior que 0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre quando o registro não foi encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Registro não encontrado"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um usuário pelo ID informado",
+        "description": "Atualiza um usuário. Realizado somente por usuários com a role(papel) de 'sadmin'. É necessário informar ao menos um campo para atualização.",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutUser"
+              },
+              "example": {
+                "name": "John Doe 2",
+                "email": "john2@teste.com",
+                "password": "1234567890",
+                "role": "user"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário atualizado com sucesso, não retorna nenhum conteúdo."
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme exemplo de errorValidation abaixo. Ou é necessário informar ao menos um campo para atualização, conforme exemplo de atLeastOne abaixo",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "errorValidation": {
+                    "value": {
+                      "errors": {
+                        "body": {
+                          "name": "Deve ter pelo menos 3 caracteres",
+                          "email": "Deve ter pelo menos 5 caracteres",
+                          "password": "Deve ter pelo menos 6 caracteres",
+                          "role": "Deve ser um dos seguintes valores: user, admin, sadmin"
+                        }
+                      }
+                    }
+                  },
+                  "atLeastOne": {
+                    "value": {
+                      "errors": {
+                        "body": {
+                          "default": "É necessário informar ao menos um campo para atualização"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre se o email já estiver cadastrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Erro ao cadastrar o registro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclui um usuário pelo ID informado",
+        "description": "Exclui um usuário. Realizado somente por usuários com a role(papel) de 'sadmin'.",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário excluído com sucesso, não retorna nenhum conteúdo."
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre quando o registro não foi encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Registro ao apagar registro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persons": {
+      "get": {
+        "summary": "Lista todos os clientes",
+        "description": "Lista todos os clientes cadastrados no sistema. Realizado somente por usuários com as roles(papel) de 'sadmin' e 'admin'.",
+        "tags": ["Persons"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limite de clientes por pagina. Numero maior que 0",
+            "default": 7,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "pagina atual. Numero maior que 0",
+            "default": 1,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "filtro de busca",
+            "default": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de clientes",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Client 1",
+                    "email": "client1@teste.com"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Client2",
+                    "email": "client2@teste.com"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "query": {
+                      "page": "Deve ser maior que 0",
+                      "limit": "Deve ser maior que 0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo cliente",
+        "description": "Cria um novo cliente. Realizado somente por usuários com as roles(papel) de 'sadmin' e 'admin'",
+        "tags": ["Persons"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPerson"
+              },
+              "example": {
+                "fullName": "Jão da Silva",
+	              "email": "joaosilva@teste.com",
+	              "cityId": 12
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cliente criado com sucesso, retorna o ID do usuário criado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "example": 27
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "body": {
+                      "fullName": "Deve ter pelo menos 3 caracteres",
+                      "cityId": "Formato digitado é invalido",
+                      "email": "Formato de e-mail digitado não é valido"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/persons/{id}": {
+      "get": {
+        "summary": "Busca um cliente pelo ID",
+        "description": "Busca um cliente pelo ID informado. Realizado somente por usuários com as roles(papel) de 'sadmin' e 'admin'.",
+        "tags": ["Persons"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do cliente",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente encontrado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "fullName": "Jão da Silva",
+                  "email": "joaosilva@teste.com",
+                  "cityId": 12
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender ao seguinte requisito de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "params": {
+                      "id": "Deve ser maior que 0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre quando o registro não foi encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Registro não encontrado"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um cliente pelo ID informado",
+        "description": "Atualiza um cliente pelo ID informado. Realizado somente por usuários com as roles(papel) de 'sadmin' e 'admin'.",
+        "tags": ["Persons"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do cliente",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutPerson"
+              },
+              "example": {
+                "fullName": "João da Silva 2",
+                "email": "joaosilva2@teste.com",
+                "cityId": 3
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Cliente atualizado com sucesso, não retorna nenhum conteúdo."
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de errorValidation abaixo. Ou é necessário informar ao menos um campo para atualização, conforme exemplo de atLeastOne abaixo",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "errorValidation": {
+                    "value":{
+                      "errors": {
+                        "body": {
+                          "fullName": "Deve ter pelo menos 3 caracteres",
+                          "email": "Formato de e-mail digitado não é valido",
+                          "cityId": "Formato digitado é invalido"
+                        }
+                      }
+                    }
+                  },
+                  "atLeastOne": {
+                    "value": {
+                      "errors": {
+                        "body": {
+                          "default": "É necessário informar ao menos um campo para atualização"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre quando o registro não foi encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Registro não encontrado"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclui um cliente pelo ID informado",
+        "description": "Exclui um cliente pelo ID informado. Realizado somente por usuários com as roles(papel) de 'sadmin' e 'admin'.",
+        "tags": ["Persons"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do cliente",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cliente excluído com sucesso, não retorna nenhum conteúdo."
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre quando o registro não foi encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Erro ao apagar registro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cities": {
+      "get": {
+        "summary": "Lista todas as cidades",
+        "description": "Lista todos as cidades cadastradas no sistema.",
+        "tags": ["Cities"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limite de cidades por página. Numero maior que 0",
+            "default": 7,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "página atual. Numero maior que 0",
+            "default": 1,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "filtro de busca",
+            "default": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de cidades",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Afonso Cláudio"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Alegre"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "query": {
+                      "page": "Deve ser maior que 0",
+                      "limit": "Deve ser maior que 0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria uma nova cidade",
+        "description": "Cria uma nova cidade. Realizado somente por usuários com as roles(papel) de 'sadmin' e 'admin'",
+        "tags": ["Cities"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostCitie"
+              },
+              "example": {
+                "name": "Vitória"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cidade criada com sucesso, retorna o ID da cidade criada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "example": 28
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "body": {
+                      "name": "Deve ter pelo menos 3 caracteres"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/cities/{id}": {
+      "get": {
+        "summary": "Busca uma cidade pelo ID",
+        "description": "Busca uma cidade pelo ID informado.",
+        "tags": ["Cities"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da cidade",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cidade encontrada",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Vitória"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender ao seguinte requisito de validação, conforme o exemplo de resposta.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "params": {
+                      "id": "Deve ser maior que 0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Não autenticado"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre quando o registro não foi encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Registro não encontrado"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza uma cidade pelo ID informado",
+        "description": "Atualiza uma cidade pelo ID informado. Realizado somente por usuários com as roles(papel) de 'sadmin' e 'admin'.",
+        "tags": ["Cities"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da cidade",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostCitie"
+              },
+              "example": {
+                "name": "Serra"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Cidade atualizada com sucesso, não retorna nenhum conteúdo."
+          },
+          "400": {
+            "description": "Erro na requisição, deve atender aos seguintes requisitos de validação, conforme o exemplo de errorValidation abaixo. Ou é necessário informar ao menos um campo para atualização, conforme exemplo de atLeastOne abaixo",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "body": {
+                      "name": "Deve ter pelo menos 3 caracteres"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre quando o registro não foi encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Erro ao atualizar registro."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclui uma cidade pelo ID informado",
+        "description": "Exclui ua cidade pelo ID informado. Realizado somente por usuários com as roles(papel) de 'sadmin' e 'admin'.",
+        "tags": ["Cities"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da cidade",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cidade excluída com sucesso, não retorna nenhum conteúdo."
+          },
+          "401": {
+            "description": "Sem Autorização. Ocorre quando o token de autenticação não foi informado ou é inválido ou a role não tem autorização para esta rota.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "noAuthentication": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autenticado"
+                      }
+                    }
+                  },
+                  "noAuthorization": {
+                    "value": {
+                      "errors": {
+                        "default": "Não autorizado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor. Normalmente ocorre quando o registro não foi encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": {
+                    "default": "Erro ao apagar registro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Signup": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "required": true
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "required": true
+          }
+        }
+      },
+      "PostUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "required": true
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "required": true
+          },
+          "role": {
+            "description": "Papel do usuário",
+            "required": true,
+            "enum": ["sadmin", "admin", "user"]
+          }
+        }
+      },
+      "PutUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário"
+          },
+          "role": {
+            "description": "Papel do usuário",
+            "required": true,
+            "enum": ["sadmin", "admin", "user"]
+          }
+        }
+      },
+      "PostPerson": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "Nome completo do cliente",
+            "required": true
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do cliente",
+            "required": true
+          },
+          "cityId": {
+            "type": "number",
+            "description": "ID da cidade do cliente",
+            "required": true
+          }
+        }
+      },
+      "PutPerson": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "Nome completo do cliente"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do cliente"
+          },
+          "cityId": {
+            "type": "number",
+            "description": "ID da cidade do cliente, deve ser um número inteiro maior que 0"
+          }
+        }
+      },
+      "PostCitie": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome da cidade",
+            "required": true
+          }
+        }
+      },
+      "Signin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "required": true
+          }
+        }
+      },
+      "AccessTokenResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "Token de acesso do usuário"
+          },
+          "role": {
+            "type": "string",
+            "description": "Papel do usuário"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

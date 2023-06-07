@@ -1,0 +1,9 @@
+/node_modules
+yarn-error.log
+tsconfig_copy
+
+/build
+/coverage
+
+.env
+*.sqlite
