@@ -214,7 +214,7 @@ Agora você pode testar todas as demais rotas, a documentação é auto explicat
 ## 👨‍💻 Autor
 Olá, meu nome é Raphael Ohlsen, Engenheiro de Telecomunicações | BackEnd e FrontEnd Developer. Em transição de carreira de Telecom para Developer que é minha verdadeira paixão. Sou aficcionado por tecnologia, programação, processos e planejamento. Dúvidas, sugestões e críticas são super bem vindas. Seguem meus contatos.
 
-- [www.mocad.dev](https://livioalvarenga.com)
+- [www.mocad.dev](https://mocad.dev)
 - [raphael@mocad.dev](raphael@mocad.dev)
 
 <p align="center">Redes Sociais</p>
