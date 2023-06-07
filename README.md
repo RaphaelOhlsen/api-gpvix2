@@ -133,7 +133,7 @@ JWT_SECRET=b2e2a8efbdf11a5ed02c9ea76f46082e
 
 **`CORS_ORIGIN`**: Esta variável permite definir a lista de domínios (ou URLs) que são permitidos fazer solicitações para a sua aplicação. 
 Ao configurar a chave CORS_ORIGIN com um valor específico, você está permitindo que apenas esses domínios tenham acesso aos recursos da sua aplicação através de solicitações CORS. 
-Para o nosso exemplo vamos liberar para a [aplicação frontend](https://github.com/RaphaelOhlsen/dashboard-gpvix) que é parte integrante do nosso projeto. Mas não necessariamente precisamos acessar esta API pela aplicação frontend. Pode ser feita através da documentação Swagger que posteriormente iremos descrever. Exemplo CORS_ORIGIN=http://127.0.0.1:3000
+Para o nosso exemplo vamos liberar para a [aplicação frontend](https://github.com/RaphaelOhlsen/dashboard-gpvix2) que é parte integrante do nosso projeto. Mas não necessariamente precisamos acessar esta API pela aplicação frontend. Pode ser feita através da documentação Swagger que posteriormente iremos descrever. Exemplo CORS_ORIGIN=http://127.0.0.1:3000
 
 **As demais variáveis são utilizadas em ambiente de produção e não serão comentadas nesta arquivo. Caso tenha interesse pode entrar em [contato](https://mocad.dev/#contato).**
 
