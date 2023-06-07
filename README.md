@@ -190,7 +190,7 @@ Voce visualizará a seguinte página:
 
 Para fazer login, clique em `Users - POST /signin`. Na parte direita, clique no botão `Try it out`. Em seguida, no corpo da requisição (Request Body), entre com os dados do usuário Admin (`email: sadmin@teste.com`, `password: senha123`) . Por fim, clique no botão azul `Execute` para prosseguir.
 
-Rolando a tela um pouco abaixo você verá o campo Responses como a figura abaixo:
+Rolando a tela um pouco abaixo você verá o campo `Responses` como na figura abaixo:
 
 <h1 align="center">
   <img alt="swagger" title="#home" src="./git/Swagger_signin.png" />
