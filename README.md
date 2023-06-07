@@ -82,12 +82,12 @@ As seguintes ferramentas foram usadas na construção do projeto
 
 ```bash
 # Clone este repositório
-$ git clone https://github.com/RaphaelOhlsen/api-gpvix.git
+$ git clone https://github.com/RaphaelOhlsen/api-gpvix2.git
 ```
 
 ```bash
 # Acesse a pasta do projeto no terminal/cmd
-cd api-gpvix
+cd api-gpvix2
 ```
 ```bash
 # Instalação da pasta node_modules
