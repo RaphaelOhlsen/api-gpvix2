@@ -11,8 +11,7 @@ import swaggerDocs from  '../swagger.json';
 const server = express();
 
 server.use(cors({
-  // origin: process.env.CORS_ORIGIN?.split(';') || [],
-  origin: '*',
+  origin: process.env.CORS_ORIGIN?.split(';') || [],
 }
 ));
 

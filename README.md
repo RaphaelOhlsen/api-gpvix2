@@ -120,11 +120,11 @@ NODE_ENV=development
 
 ```.env
 # Exemplo
-NODE_ENV=development
+IS_LOCALHOST=true
 ```
 **`JWT_SECRET`**:  É importante entender que esta variável é usada para garantir a autenticidade e a integridade dos tokens JWT, protegendo a aplicação contra manipulação e falsificação. 
 **Recomenda-se armazenar a chave em um local seguro e não compartilhá-la ou expô-la desnecessariamente.** 
-Você pode usar o site: onlinehashtools.com/generate-random-md5-hash para gerar a sua variável.
+Você pode usar o site: [onlinehashtools.com/generate-random-md5-hash](https://onlinehashtools.com/generate-random-md5-hash) para gerar a sua variável.
 
 ```.env
 # Exemplo
@@ -143,7 +143,7 @@ Para o nosso exemplo vamos liberar para a [aplicação frontend](https://github.
 
 ## 🎲 Banco de Dados
 
-No ambiente de desenvolvimento utilizamos o SQLite. SQLite é um sistema de gerenciamento de banco de dados relacional (SGBDR) que é embutido diretamente em aplicativos. Diferente dos bancos de dados tradicionais, como MySQL ou PostgreSQL, que são executados em um servidor separado, o SQLite opera como uma biblioteca dentro do aplicativo, armazenando os dados em um único arquivo e é muito utilizado em ambientes de teste e desenvolvimento.
+No ambiente de desenvolvimento utilizamos o SQLite. Este banco é um sistema de gerenciamento de banco de dados relacional (SGBDR) que é embutido diretamente em aplicativos. Diferente dos bancos de dados tradicionais, como MySQL ou PostgreSQL, que são executados em um servidor separado, o SQLite opera como uma biblioteca dentro do aplicativo, armazenando os dados em um único arquivo e é muito utilizado em ambientes de teste e desenvolvimento.
 
 
 ```bash
@@ -161,7 +161,7 @@ No banco de dados temos 3 tabelas. São elas:
 
 + **city**: Encontra-se preenchida com as cidades do meu estado (Espírito Santo).
 + **person**: Tabela onde serão armazenados os dados dos clientes. Possui as colunas `FullName`, `email` e `cityId` que é uma *"chave estrangeira"* (*foreign key*, em inglês). Esta coluna em questão faz referência à chave primária da tabela city, estabelecendo uma relação entre elas.
-+ **user**: Tabela onde serão cadastrados as informações dos administradores do sistema. Possui as colunas `mame`, `email`, `password`, `role`. Esta última coluna define os poderes de *autorização de uso* em partes do sistema. Por exemplo, somente usuários com "role" iqual a sadmin poderão criar, alterar, atualizar, listar e deletar usuários. Importante informar que para fins de testes o banco de dados já foi populado com o usuário `Sadmin`, que tem as informações de login: `email: sadmin@teste.com`, `password: senha123 `e `role: sadmin`, esta última dá poderes administrativos totais para a aplicação.
++ **user**: Tabela onde serão cadastrados as informações dos administradores do sistema. Possui as colunas `mame`, `email`, `password`, `role`. Esta última coluna define os poderes de *autorização de uso* em partes do sistema. Por exemplo, somente usuários com "role" iqual a `sadmin` poderão criar, alterar, atualizar, listar e deletar usuários. Importante informar que para fins de testes o banco de dados já foi populado com o usuário `Sadmin`, que tem as informações de login: `email: sadmin@teste.com`, `password: senha123 `e `role: sadmin`, esta última dá poderes administrativos totais para a aplicação.
 
 ---
 
@@ -171,7 +171,7 @@ No banco de dados temos 3 tabelas. São elas:
 Swagger é uma estrutura de código aberto que permite criar, documentar e testar APIs de forma fácil e eficiente. É amplamente utilizado para descrever e documentar APIs RESTful, fornecendo uma representação visual interativa da API.
 A principal finalidade do Swagger é melhorar a comunicação entre os desenvolvedores da API e os consumidores da API (como desenvolvedores de aplicativos ou clientes). Com o Swagger, é possível descrever detalhadamente os endpoints da API, os parâmetros necessários, os tipos de dados esperados, as respostas possíveis e até mesmo fornecer exemplos de uso.
 
-###Iniciando a API
+## Iniciando a API
 
 ```bash
 # Inciando a aplicação
