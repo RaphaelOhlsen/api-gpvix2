@@ -198,7 +198,7 @@ Rolando a tela um pouco abaixo você verá o campo `Responses` como na figura ab
 
 Copie a informação de accessTokem. 
 
-No início da página do lado direito clique no botão Authorize como na figura abaixo:
+No início da página do lado direito clique no botão `Authorize` como na figura abaixo:
 
 <h1 align="center">
   <img alt="authorize" title="#home" src="./git/Swagger_Authorize.png" />
