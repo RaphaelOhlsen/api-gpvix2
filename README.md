@@ -27,13 +27,14 @@
 &nbsp;
 
 <p align="center">
-  <a href="#license"><img src="https://img.shields.io/github/license/LivioAlvarenga/Template-Api-Rest-Node-Docker-Prisma?color=ff0000"></a>
-  <a href="https://github.com/LivioAlvarenga/Template-Api-Rest-Node-Docker-Prisma"><img src="https://img.shields.io/github/languages/count/LivioAlvarenga/Template-Api-Rest-Node-Docker-Prisma" alt="total amount of programming languages used in the project" /></a>
-  <a href="https://github.com/LivioAlvarenga/Template-Api-Rest-Node-Docker-Prisma"><img src="https://img.shields.io/github/languages/top/LivioAlvarenga/Template-Api-Rest-Node-Docker-Prisma" alt="most used language in the projects" /></a>
+  <img src="./git/license_badge.svg">
+  <img src="./git/languages_badge.svg" alt="total amount of programming languages used in the project" /></a>
+  <img src="./git/typescript_badge.svg" alt="most used language in the projects" /></a>
 <p>
 
 <p align="center">
-  <a href= "https://api-rest-node-solid.onrender.com/docs"><img alt="swagger badge" height=40 src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/e8e5c3d2752ae17cbffa11142d8513fe1f405873/files/swagger-badge.svg"></a>
+  <img alt="digita locean badge" src="./git/digitalocean.svg">
+  <a href= "https://oyster-app-sjykt.ondigitalocean.app/api-docs/"><img alt="swagger badge" height=40 src="./git/swagger_badge.svg"></a>
 <p>
 
 
@@ -60,15 +61,20 @@ As seguintes ferramentas foram usadas na construção do projeto
 
 <p align="center">
   <!-- <a href= ""><img alt="" src="https://img.shields.io/static/v1?logoWidth=15&logoColor=ECD53F&logo=.ENV&label=Managing Environment Variables&message=.ENV&color=ECD53F"></a> -->
-  <a href= "https://nodejs.org/en/" target="_blank" rel="noopener noreferrer"><img alt="Node.js badge" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/2467074c4c912dd04b12bcee1076cb5ca7ba9eaf/files/nodejs-badge.svg"></a>
-  <a href= "https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer"><img alt="TypeScript badge" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/2467074c4c912dd04b12bcee1076cb5ca7ba9eaf/files/typescript-badge.svg"></a>
-  <a href= "https://www.dotenv.org/" target="_blank" rel="noopener noreferrer"><img alt="Dotenv badge" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/4eed338fdcd547570ed365f2b344e43c8202e88f/files/dotenv-badge.svg"></a>
-  <a href= "https://insomnia.rest/" target="_blank" rel="noopener noreferrer"><img alt="Insomnia badge" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/2467074c4c912dd04b12bcee1076cb5ca7ba9eaf/files/insomnia-badge.svg"></a>
-  <a href= "https://swagger.io/"><img alt="swagger badge" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/e8e5c3d2752ae17cbffa11142d8513fe1f405873/files/swagger-badge.svg"></a>
-  <a href= "https://jwt.io/"><img alt="JSON Web Tokens Badge" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/af3b694b2d536d66113468df616d3f165d881eb7/files/jwt-badge.svg"></a>
-  <a href= "https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer"><img alt="vscode download" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/2467074c4c912dd04b12bcee1076cb5ca7ba9eaf/files/vsCode-badge.svg"></a>
-  <a href= "https://github.com/prettier/prettier" target="_blank" rel="noopener noreferrer"><img alt="code formatter prettier" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/2467074c4c912dd04b12bcee1076cb5ca7ba9eaf/files/prettier-badge.svg"></a>
-  <a href= "https://eslint.org/" target="_blank" rel="noopener noreferrer"><img alt="code standardization eslint" src="https://raw.githubusercontent.com/LivioAlvarenga/LivioAlvarenga/59575ed19b13121cd113cfc66a71f18dea210c79/files/eslint-badge.svg"></a>
+  <a href= "https://nodejs.org/en/" target="_blank" rel="noopener noreferrer"><img alt="Node.js badge" src="./git/RuntimeEnvironment_badge.svg"></a>
+  <a href= "https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer"><img alt="TypeScript badge" src="./git/typescript_badge.svg"></a>
+  <a href="https://expressjs.com/" target="_blank" rel="noopener noreferrer"> <img alt="Express badge"src="./git/express_badge.svg"></a>
+  <a href= "https://www.dotenv.org/" target="_blank" rel="noopener noreferrer"><img alt="Dotenv badge" src="./git/managingEnvironment_badgw.svg"></a>
+  <a href= "https://knexjs.org/" target="_blank" rel="noopener noreferrer"><img alt="Knex badge" src="./git/knex_badge.svg"></a>
+  <a href= "https://github.com/jquense/yup" target="_blank" rel="noopener noreferrer"><img alt="Yup badge" src="./git/yup_badge.svg"></a>
+  <a href= "https://insomnia.rest/" target="_blank" rel="noopener noreferrer"><img alt="Insomnia badge" src="./git/insomnia_badge.svg"></a>
+  <a href= "https://swagger.io/" target="_blank" rel="noopener noreferrer"><img alt="swagger badge" src="./git/swagger_badge.svg"></a>
+  <a href= "https://www.postgresql.org/" target="_blank" rel="noopener noreferrer"><img alt="postgre badge" src="./git/postgre_badge.svg"></a>
+  <a href= "https://jestjs.io/" target="_blank" rel="noopener noreferrer"><img alt="jest badge" src="./git/jest_badge.svg"></a>
+  <a href= "https://jwt.io/"><img alt="JSON Web Tokens Badge" src="./git/jsowebtokens_badge.svg"></a>
+  <a href= "https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer"><img alt="vscode download" src="./git/vscode_badge.svg"></a>
+  <a href= "https://github.com/prettier/prettier" target="_blank" rel="noopener noreferrer"><img alt="code formatter prettier" src="./git/prettier_badge.svg"></a>
+  <a href= "https://eslint.org/" target="_blank" rel="noopener noreferrer"><img alt="code standardization eslint" src="./git/eslint_badge.svg"></a>
 </p>
 
 ---
